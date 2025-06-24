@@ -16,8 +16,43 @@ class Arrays:
         
         return write_index + 1
     
+    def isAnagram(self, s, t):
+        """
+        Checks if two strings are anagrams of each other.
+        :param s: str - first string
+        :param t: str - second string
+        :return: bool - True if s and t are anagrams, False otherwise
+        """
+        if len(s) != len(t):
+            return False
+        
+        offset = ord('a')
+        storage = [0] * 26
+        for ch in s:
+            ch_idx = ord(ch) - offset
+            storage[ch_idx] += 1
+
+        for ch in t:
+            ch_idx = ord(ch) - offset
+            if storage[ch_idx] == 0:
+                return False
+            
+            storage[ch_idx] -= 1 
+
+        for elem in storage:
+            if elem != 0:
+                return False
+            
+        return True
+    
 if __name__ == "__main__":
     arr = Arrays()
     nums = [1]
     new_length = arr.remove_duplicates_sorted_array(nums)
     print(f"New length: {new_length}, Modified array: {nums[:new_length]}")
+
+    arr = Arrays()
+    s = "jam"
+    t = "jar"
+    is_anagram = arr.isAnagram(s, t)
+    print(f"Are '{s}' and '{t}' anagrams? {is_anagram}")
